@@ -24,6 +24,7 @@ class SLASH_API ASlashCharacter : public ABaseCharacter, public IPickupInterface
 
 public:
 	ASlashCharacter();
+	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Jump() override;
 
@@ -42,17 +43,21 @@ protected:
 	void LookUp(float Value);
 	void EKeyPressed();
 	virtual void Attack() override;
+	void Dodge();
 
 	/** Combat */
 	void EquipWeapon(AWeapon* Weapon);
 	virtual void AttackEnd() override;
+	virtual void DodgeEnd() override;
 	virtual bool CanAttack() override;
 	bool CanDisarm();
 	bool CanArm();
 	void Disarm();
 	void Arm();
 	void PlayEquipMontage(const FName& SectionName);
-	virtual void Die() override;
+	virtual void Die_Implementation() override;
+	bool HasEnoughStamina();
+	bool IsOccupied();
 
 	UFUNCTION(BlueprintCallable)
 	void AttachWeaponToBack();
